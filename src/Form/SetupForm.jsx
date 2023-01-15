@@ -1,8 +1,10 @@
+import { useGlobalContext } from "../Context/Context";
 const SetupForm = () => {
+  const { quiz, handleChange, handleSubmit, error } = useGlobalContext();
   return (
     <main>
       <section className="quiz quiz-small">
-        <form className="setup-form" action="">
+        <form className="setup-form">
           <h2>setup quiz</h2>
           <div className="form-control">
             <label htmlFor="amount">number of questions</label>
@@ -10,6 +12,8 @@ const SetupForm = () => {
               type="number"
               name="amount"
               id="amount"
+              value={quiz.amount}
+              onChange={handleChange}
               className="form-input"
               min={1}
               max={50}
@@ -17,7 +21,13 @@ const SetupForm = () => {
           </div>
           <div className="form-control">
             <label htmlFor="category">category</label>
-            <select name="category" id="category" className="form-input">
+            <select
+              name="category"
+              id="category"
+              className="form-input"
+              value={quiz.category}
+              onChange={handleChange}
+            >
               <option value="sports">sports</option>
               <option value="history">history</option>
               <option value="politics">politics</option>
@@ -25,14 +35,22 @@ const SetupForm = () => {
           </div>
           <div className="form-control">
             <label htmlFor="difficulty">difficulty</label>
-            <select name="difficulty" id="difficulty" className="form-input">
-              <option value="easy">easy</option>
+            <select
+              name="difficulty"
+              id="difficulty"
+              className="form-input"
+              onChange={handleChange}
+              value={quiz.difficulty}
+            >
+              <option value="ease">easy</option>
               <option value="medium">medium</option>
               <option value="hard">difficult</option>
             </select>
           </div>
-          <p className="error">can't generate questions, please try again</p>
-          <button type="submit" className="submit-btn">
+          {error && (
+            <p className="error">can't generates questions , pls try again</p>
+          )}
+          <button type="submit" className="submit-btn" onClick={handleSubmit}>
             start
           </button>
         </form>
@@ -40,5 +58,4 @@ const SetupForm = () => {
     </main>
   );
 };
-
 export default SetupForm;
